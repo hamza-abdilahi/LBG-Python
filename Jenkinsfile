@@ -3,7 +3,8 @@ pipeline {
 	agent any
 	stages {
 		stage('pre-build clean') {
-			steps {
+			steps { 
+				sh 'docker stop nginx && docker rm nginx'
 				sh 'docker system prune -f'
 			}
 		}
