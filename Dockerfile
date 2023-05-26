@@ -7,4 +7,4 @@ RUN pip3 install -r requirements.txt
 # Expose the correct port
 EXPOSE 5000
 # Create an entrypoint
-ENTRYPOINT ["python3", "lbg.py"]
+ENTRYPOINT ["python3", "lbg.py", "--PORT", "5000"]
