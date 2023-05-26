@@ -4,8 +4,8 @@ pipeline {
 	stages {
 		stage('pre-build clean') {
 			steps { 
-				sh 'docker stop nginx && docker rm nginx'
-				sh 'docker stop lbg && docker rm lbg'
+				// sh 'docker stop nginx && docker rm nginx'
+				// sh 'docker stop lbg && docker rm lbg'
 				sh 'docker system prune -f'
 			}
 		}
