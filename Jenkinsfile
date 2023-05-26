@@ -11,8 +11,8 @@ pipeline {
 			steps {
 				sh '''
 				docker network create lbg-net
-				docker build -t lbg:v1 .
-				docker run -d --network lbg-net --name lbg lbg-app:v1
+				docker build -t lbg .
+				docker run -d --network lbg-net --name lbg lbg
 				docker run -d --network lbg-net --name nginx --mount type=bind,source=$(pwd)/nginx.conf,target=/etc/nginx.conf -p 80:80 nginx:alpine
 				'''
 			}
