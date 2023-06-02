@@ -24,4 +24,5 @@ spec:
           ports:
             - containerPort: 9000
           env:
-            PORT: 9000
+            - name: PORT
+              value: "9000"
