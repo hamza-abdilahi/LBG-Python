@@ -1,23 +1,22 @@
 pipeline {
-
-	
 	agent any
 	stages {
-		stage('pre-build clean') {
-			steps { 
-				 sh 'docker stop nginx && docker rm nginx'
-				 sh 'docker stop lbg && docker rm lbg'
-				sh 'docker system prune -f'
-			}
-		}
-		stage('build containers') {
+		stage('build and push image') {
 			steps {
 				sh '''
-				docker network inspect lbg-net && sleep 1 || docker network create lbg-net 
-				docker build -t lbg .
-				docker run -d --network lbg-net --name lbg lbg
-				docker run -d --network lbg-net --name nginx --mount type=bind,source=$(pwd)/nginx.conf,target=/etc/nginx/nginx.conf -p 80:80 nginx:alpine
+				docker build -t gcr.io/lbg-mea-11/sprint3-agray:v1 .
+				docker push gcr.io/lbg-mea-11/sprint3-agray:v1
 				'''
+			}
+		}
+		stage('cleanup') {
+			steps {
+				sh 'docker rmi gcr.io/lbg-mea-11/sprint3-agray:v1'
+			}
+		}
+		stage('deploy') {
+			steps {
+				sh 'kubectl apply -f kubernetes/'
 			}
 		}
 	}
